@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="29ad2eea-b4c8-4ae6-b2b2-972797fab300" basePath="/sample" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Listener_config1" doc:name="HTTP Request configuration" doc:id="f9227a4a-98d5-4046-b40e-bf2dc6eb9028" basePath="/parmname">
+		
+		<http:request-connection port="8082" />
+	</http:request-config>
+	
+	
+	<flow name="sample-applnFlow4" doc:id="98cd7431-161b-4e98-ae1b-338741d3607d" >
+		<http:request method="GET" doc:name="HTTP" doc:id="a81fc91d-d649-48fa-836d-d10061f8e1fb" config-ref="HTTP_Listener_config1" path="/parmname" sendCorrelationId="AUTO" outputMimeType="text/xml" followRedirects="true" sendBodyMode="AUTO" requestStreamingMode="AUTO">
+			<http:body ><![CDATA[[[message.inboundProperties.'http.uri.params'.parmname]]]]></http:body>
+			
+		</http:request>
+	</flow>
+	
+	
+	<flow name="sample-applnFlow5" doc:id="55b40d8b-7dfc-4b86-807d-7b501adf66b4" >
+		<http:listener doc:name="Listener" doc:id="fea5a631-05fa-42d4-98a0-d1767f0a924e" config-ref="HTTP_Listener_config" path="/sample"/>
+	</flow>
+	
+</mule>
